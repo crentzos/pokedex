@@ -23,7 +23,7 @@ export async function startREPL(state: State) {
 
 
         if (!command) {
-            console.log(`Command ${words[0]} does not exist. Please type a valid command.`);
+            console.log(`Command ${words[0]} does not exist. Please type a valid command. You can type help to see all the available commands.`);
             state.rl.prompt();
             return;
         }
@@ -31,7 +31,7 @@ export async function startREPL(state: State) {
         try {
             await command.callback(state, ...words.slice(1));
         } catch (error) {
-            console.log("An error occurred while running that command.");
+            console.log(`An error occurred while running ${words[0]} command.`);
         }
 
 

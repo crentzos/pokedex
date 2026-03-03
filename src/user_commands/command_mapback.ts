@@ -1,9 +1,9 @@
-import { State } from "./state"
+import { State } from "../state"
 
 export async function commandMapb(state: State) {
 
     if (!state.previousLocationsURL) {
-        console.log("You're on the first page");
+        console.log("You're on the first page.");
         return;
     }
 

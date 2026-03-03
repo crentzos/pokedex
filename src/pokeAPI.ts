@@ -8,69 +8,44 @@ export class PokeApi {
         this.cache = new Cache(interval);
     }
 
+    private async get<T>(url: string): Promise<T> {
+        const cached = this.cache.get(url);
+        if (cached) return cached as T;
 
+        const response = await fetch(url);
+        if (!response.ok) {
+            throw new Error(`Response status: ${response.status}`);
+        }
+
+        const data = await response.json() as T;
+        this.cache.add(url, data);
+
+        return data;
+    }
 
     async fetchLocations(pageURL?: string): Promise<ShallowLocations> {
         const url = pageURL || `${PokeApi.baseURL}/location-area`;
-        const cacheData = this.cache.get(url);
-        if (cacheData) {
-            return cacheData as ShallowLocations;
-        }
-        try {
-            const response = await fetch(url);
-            if (!response.ok) {
-                throw new Error(`Response status: ${response.status}`);
-            }
-            const result = await response.json();
-            this.cache.add(url, result);
-            return result as ShallowLocations;
-        } catch (error) {
-            console.log(error);
-            throw error;
-        }
+        return this.get<ShallowLocations>(url);
     }
 
     async fetchEncounters(name: string) {
         const url = `${PokeApi.baseURL}/location-area/${name}`;
-        const cacheData = this.cache.get(url);
-        if (cacheData) {
-            return cacheData as Location;
-        }
-        try {
-            const response = await fetch(url);
-            if (!response.ok) {
-                throw new Error(`Response status: ${response.status}`);
-            }
-            const result = await response.json();
-            this.cache.add(url, result);
-            return result as Location;
-        } catch (error) {
-            console.log(error);
-            throw error;
-        }
+        return this.get<Location>(url);
     }
 
     async fetchPokemon(pokemonName: string) {
         const url = `${PokeApi.baseURL}/pokemon/${pokemonName}`;
-        try {
-            const response = await fetch(url);
-            if (!response.ok) {
-                throw new Error(`Response status: ${response.status}`);
-            }
-            const data = await response.json();
-            return {
-                name: data.name,
-                height: data.height,
-                weight: data.weight,
-                base_experience: data.base_experience,
-                types: data.types.map((t: any) => t.type.name),
-                stats: Object.fromEntries(
-                    data.stats.map((s: any) => [s.stat.name, s.base_stat])
-                )
-            } as Pokemon;
-        } catch (error) {
-            console.log(error);
-            throw error;
+        const data = await this.get<any>(url);
+
+        return {
+            name: data.name,
+            height: data.height,
+            weight: data.weight,
+            base_experience: data.base_experience,
+            types: data.types.map((t: any) => t.type.name),
+            stats: Object.fromEntries(
+                data.stats.map((s: any) => [s.stat.name, s.base_stat])
+            )
         }
     }
 }

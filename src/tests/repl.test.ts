@@ -1,4 +1,4 @@
-import { cleanInput } from "./repl";
+import { cleanInput } from "../repl";
 import { describe, expect, test } from "vitest";
 
 describe.each([
@@ -10,7 +10,7 @@ describe.each([
         input: "  Good    morning, Jenny!  ",
         expected: ["Good", "morning,", "Jenny!"],
     },
-    // TODO: more test cases here
+
 ])("cleanInput($input)", ({ input, expected }) => {
     test(`Expected: ${expected}`, () => {
 
@@ -18,7 +18,6 @@ describe.each([
 
         expect(actual).toHaveLength(expected.length);
         for (const i in expected) {
-            // likewise, the `toBe` function will fail the test if the values are not equal
             expect(actual[i]).toBe(expected[i]);
         }
     });

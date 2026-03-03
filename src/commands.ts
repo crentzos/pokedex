@@ -1,12 +1,13 @@
-import { commandCatch } from "./command_catch.js";
-import { commandExit } from "./command_exit.js";
-import { commandHelp } from "./command_help.js";
-import { commandInspect } from "./command_inspect.js";
-import { commandPokedex } from "./command_pokedex.js";
-import { commandExplore } from "./explore.js";
-import { commandMap } from "./map.js";
-import { commandMapb } from "./mapb.js";
+
 import { State } from "./state.js";
+import { commandCatch } from "./user_commands/command_catch.js";
+import { commandExit } from "./user_commands/command_exit.js";
+import { commandHelp } from "./user_commands/command_help.js";
+import { commandInspect } from "./user_commands/command_inspect.js";
+import { commandPokedex } from "./user_commands/command_pokedex.js";
+import { commandExplore } from "./user_commands/command_explore.js";
+import { commandMap } from "./user_commands/command_map.js";
+import { commandMapb } from "./user_commands/command_mapback.js";
 
 export type CLICommand = {
     name: string;
@@ -19,12 +20,12 @@ export function getCommands(): Record<string, CLICommand> {
     return {
         exit: {
             name: "exit",
-            description: "Exits the pokedex",
+            description: "Exits the pokedex.",
             callback: commandExit,
         },
         help: {
             name: "help",
-            description: "Displays help commands",
+            description: "Displays the available commands.",
             callback: commandHelp,
         },
         map: {
