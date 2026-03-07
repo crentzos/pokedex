@@ -1,5 +1,5 @@
 import { State } from "./state.js";
-
+import repl from "node:repl";
 
 export function cleanInput(input: string): string[] {
     return input.trim().split(/\s+/).filter(word => word !== "");
@@ -8,35 +8,34 @@ export function cleanInput(input: string): string[] {
 
 export async function startREPL(state: State) {
     console.log("Welcome to the Pokedex! Type 'help' to see available commands.");
-    state.rl.prompt();
+    state.replServer = repl.start({
+        prompt: "pokedex > ",
+        eval: (async (cmd: string, _context: any, _filename: string, reprompt: (err: Error | null, result?: any) => void) => {
+            const words = cleanInput(cmd);
 
+            if (words.length === 0) {
+                return reprompt(null);
+            }
 
-    state.rl.on("line", async (input) => {
+            const command = state.commands[words[0]];
 
-        const words: string[] = cleanInput(input);
-        if (words.length === 0) {
-            state.rl.prompt();
-            return;
-        }
+            if (!command) {
+                console.log(`Command ${words[0]} does not exist. Please type a valid command. You can type help to see all the available commands.`);
+                return reprompt(null);
+            }
 
-        const command = state.commands[words[0]];
+            try {
+                await command.callback(state, ...words.slice(1));
+                reprompt(null);
+            } catch (error) {
+                console.log(`An error occurred while running ${words[0]} command.`);
+                reprompt(null);
+            }
+        }) as any
 
+    });
 
-        if (!command) {
-            console.log(`Command ${words[0]} does not exist. Please type a valid command. You can type help to see all the available commands.`);
-            state.rl.prompt();
-            return;
-        }
-
-        try {
-            await command.callback(state, ...words.slice(1));
-        } catch (error) {
-            console.log(`An error occurred while running ${words[0]} command.`);
-        }
-
-
-        state.rl.prompt();
-    }
-    )
-};
-
+    state.replServer.on('exit', () => {
+        process.exit(0);
+    });
+}
