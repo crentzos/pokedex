@@ -8,17 +8,33 @@ describe.each([
     },
     {
         input: "  Good    morning, Jenny!  ",
-        expected: ["Good", "morning,", "Jenny!"],
+        expected: ["good", "morning,", "jenny!"],
     },
-
+    {
+        input: "PIKACHU",
+        expected: ["pikachu"],
+    },
+    {
+        input: "   ",
+        expected: [],
+    },
+    {
+        input: "",
+        expected: [],
+    },
+    {
+        input: " explore pastoria-city ",
+        expected: ["explore", "pastoria-city"]
+    },
+    {
+        input: "catch\tpikachu\n",
+        expected: ["catch", "pikachu"]
+    },
 ])("cleanInput($input)", ({ input, expected }) => {
     test(`Expected: ${expected}`, () => {
 
         const actual = cleanInput(input);
 
-        expect(actual).toHaveLength(expected.length);
-        for (const i in expected) {
-            expect(actual[i]).toBe(expected[i]);
-        }
+        expect(actual).toEqual(expected);
     });
 });

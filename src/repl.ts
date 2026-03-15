@@ -2,7 +2,7 @@ import { State } from "./state.js";
 import repl from "node:repl";
 
 export function cleanInput(input: string): string[] {
-    return input.trim().split(/\s+/).filter(word => word !== "");
+    return input.toLowerCase().trim().split(/\s+/).filter(word => word !== "");
 
 }
 
@@ -28,8 +28,11 @@ export async function startREPL(state: State) {
                 await command.callback(state, ...words.slice(1));
                 reprompt(null);
             } catch (error) {
-                console.log(`An error occurred while running ${words[0]} command.`);
-                reprompt(null);
+                if (error instanceof Error) {
+                    console.log(`Error: ${error.message}`);
+                } else {
+                    console.log(`An unexpected error occurred while running ${words[0]}.`);
+                }
             }
         }) as any
 
