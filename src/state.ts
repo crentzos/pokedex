@@ -1,6 +1,6 @@
 import { PokeApi, Pokemon } from "./pokeAPI.js";
 
-import { CLICommand, getCommands } from "./commands.js";
+import { CLICommand, getCommands } from "./commandsRegistry.js";
 import { REPLServer } from "node:repl";
 
 
