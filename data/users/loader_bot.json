@@ -1,0 +1,10 @@
+{
+  "profile": {
+    "passId": "1",
+    "name": "Tester",
+    "dob": "2000-01-01",
+    "gender": "none"
+  },
+  "pokedex": {},
+  "lastLocationURL": null
+}
