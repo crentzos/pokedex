@@ -1,7 +1,12 @@
 import { PokeApi, Pokemon } from "./pokeAPI.js";
-
 import { CLICommand, getCommands } from "./commandsRegistry.js";
 import { REPLServer } from "node:repl";
+import { User, UserProfile } from "./user.js";
+
+export type InterviewState = {
+    pendingProfile: Partial<UserProfile>;
+    step: number;
+};
 
 
 export type State = {
@@ -11,6 +16,8 @@ export type State = {
     previousLocationsURL: string | null;
     usersPokedex: Record<string, Pokemon>;
     replServer: REPLServer | null;
+    currentUser: User | null;
+    interview: InterviewState | null;
 };
 
 export function initState() {

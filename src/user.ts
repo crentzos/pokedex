@@ -15,33 +15,38 @@ export interface UserData {
 
 
 export class User {
-    private userData: UserData;
+    private _userData: UserData;
 
-    constructor(profile: UserProfile, initialPokedex = {}, initialLocation: string | null = null) {
-        this.userData = {
+    constructor(profile: UserProfile, initialPokedex: Record<string, Pokemon> = {}, initialLocation: string | null = null) {
+        this._userData = {
             profile,
             pokedex: initialPokedex,
             lastLocationURL: initialLocation,
         };
     };
 
+
     get profile(): UserProfile {
-        return this.userData.profile;
+        return this._userData.profile;
     }
 
     get pokedex(): Record<string, Pokemon> {
-        return this.userData.pokedex;
+        return this._userData.pokedex;
     }
 
-    get lastLocation(): string | null {
-        return this.userData.lastLocationURL;
+    get lastLocationURL(): string | null {
+        return this._userData.lastLocationURL;
+    }
+
+    get userData(): UserData {
+        return this._userData;
     }
 
     addPokemon(name: string, pokemon: Pokemon): void {
-        this.userData.pokedex[name.toLowerCase()] = pokemon;
+        this._userData.pokedex[name.toLowerCase()] = pokemon;
     }
 
     toJSON(): string {
-        return JSON.stringify(this.userData, null, 2);
+        return JSON.stringify(this._userData, null, 2);
     }
 }

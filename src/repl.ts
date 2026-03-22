@@ -1,5 +1,7 @@
+import { interviewHandler } from "./program_commands/interviewHandler.js";
 import { State } from "./state.js";
 import repl from "node:repl";
+
 
 export function cleanInput(input: string): string[] {
     return input.toLowerCase().trim().split(/\s+/).filter(word => word !== "");
@@ -11,6 +13,11 @@ export async function handleCommand(
     state: State,
     reprompt: (err: Error | null, result?: any) => void
 ) {
+    if (state.interview) {
+        await interviewHandler(cmd, state);
+        return reprompt(null);
+    }
+
     const words = cleanInput(cmd);
     if (words.length === 0) return reprompt(null);
 
@@ -25,16 +32,17 @@ export async function handleCommand(
         reprompt(null);
     } catch (error: any) {
         console.log(`Error: ${error.message}`);
-        reprompt(null);
+        return reprompt(null);
     }
 }
 
 export async function startREPL(state: State) {
     console.log("Welcome to the Pokedex! Type 'help' to see available commands.");
+
     state.replServer = repl.start({
         prompt: "pokedex > ",
         eval: (async (cmd: string, _context: any, _filename: string, reprompt: (err: Error | null, result?: any) => void) => {
-            handleCommand(cmd, state, reprompt);
+            await handleCommand(cmd, state, reprompt);
         }) as any
     });
 
@@ -42,3 +50,4 @@ export async function startREPL(state: State) {
         process.exit(0);
     });
 }
+

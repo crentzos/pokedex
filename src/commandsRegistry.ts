@@ -1,13 +1,15 @@
 
 import { State } from "./state.js";
-import { commandCatch } from "./user_commands/command_catch.js";
-import { commandExit } from "./user_commands/command_exit.js";
-import { commandHelp } from "./user_commands/command_help.js";
-import { commandInspect } from "./user_commands/command_inspect.js";
-import { commandPokedex } from "./user_commands/command_pokedex.js";
-import { commandExplore } from "./user_commands/command_explore.js";
-import { commandMap } from "./user_commands/command_map.js";
-import { commandMapb } from "./user_commands/command_mapback.js";
+import { commandCatch } from "./program_commands/command_catch.js";
+import { commandExit } from "./program_commands/command_exit.js";
+import { commandHelp } from "./program_commands/command_help.js";
+import { commandInspect } from "./program_commands/command_inspect.js";
+import { commandPokedex } from "./program_commands/command_pokedex.js";
+import { commandExplore } from "./program_commands/command_explore.js";
+import { commandMap } from "./program_commands/command_map.js";
+import { commandMapb } from "./program_commands/command_mapback.js";
+import { commandLogin } from "./program_commands/command_login.js";
+
 
 export type CLICommand = {
     name: string;
@@ -57,6 +59,11 @@ export function getCommands(): Record<string, CLICommand> {
             name: "pokedex",
             description: "Prints all the Pokemon in your pokedex.",
             callback: commandPokedex,
+        },
+        login: {
+            name: "login",
+            description: "Logs in the current user.",
+            callback: commandLogin,
         }
     }
 }
