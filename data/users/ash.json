@@ -1,9 +1,9 @@
 {
   "profile": {
     "name": "ash",
-    "dob": "21-08-1995\n",
-    "gender": "male\n",
-    "passId": "1\n"
+    "passId": "1",
+    "dob": "03-04-2026",
+    "gender": "male"
   },
   "pokedex": {},
   "lastLocationURL": null

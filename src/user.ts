@@ -42,8 +42,15 @@ export class User {
         return this._userData;
     }
 
-    addPokemon(name: string, pokemon: Pokemon): void {
+    addPokemon(name: string, pokemon: Pokemon): boolean {
+        const key = name.toLowerCase();
+
+        if (this._userData.pokedex[key]) {
+            console.log(`You have already caught ${name}.`);
+            return false;
+        }
         this._userData.pokedex[name.toLowerCase()] = pokemon;
+        return true;
     }
 
     toJSON(): string {

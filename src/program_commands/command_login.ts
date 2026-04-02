@@ -1,6 +1,6 @@
-import { loadUserData, userExists } from "src/persistence";
-import { State } from "src/state";
-import { User } from "src/user";
+import { loadUserData, userExists } from "../persistence";
+import { State } from "../state";
+import { User } from "../user";
 import { interviewHandler } from "./interviewHandler";
 
 

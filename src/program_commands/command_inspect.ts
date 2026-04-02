@@ -1,16 +1,26 @@
 import { State } from "../state";
 
 export async function commandInspect(state: State, ...args: string[]): Promise<void> {
-    const pokemonName = args[0];
-    const pokemon = state.usersPokedex[pokemonName];
-    if (pokemonName === undefined) {
+    if (!state.currentUser) {
+        console.log("Please log in to have access to your Pokedex.");
+        return;
+    }
+
+
+    if (args.length === 0 || !args[0]) {
         console.log("Please type the name of the pokemon you want to inspect.");
         return;
     }
+
+    const pokemonName = args[0].toLowerCase();
+    const pokemon = state.currentUser.pokedex[pokemonName];
+
     if (pokemon === undefined) {
         console.log(`You have not caught ${pokemonName}.`);
         return;
     }
+
+
     console.log(`Name: ${pokemon.name}`);
     console.log(`Height: ${pokemon.height}`);
     console.log(`Weight: ${pokemon.weight}`);

@@ -33,3 +33,21 @@ export async function userExists(username: string): Promise<boolean> {
         return false;
     }
 }
+
+export async function getAllBadgeIds(): Promise<string[]> {
+    try {
+        const files = await fs.readdir(USERS_DIR);
+        const ids: string[] = [];
+
+        for (const file of files) {
+            if (file.endsWith(".json")) {
+                const content = await fs.readFile(path.join(USERS_DIR, file), "utf8");
+                const data = JSON.parse(content) as UserData;
+                ids.push(data.profile.passId);
+            }
+        }
+        return ids;
+    } catch {
+        return []; // If folder doesn't exist yet
+    }
+}

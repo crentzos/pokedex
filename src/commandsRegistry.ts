@@ -9,6 +9,7 @@ import { commandExplore } from "./program_commands/command_explore.js";
 import { commandMap } from "./program_commands/command_map.js";
 import { commandMapb } from "./program_commands/command_mapback.js";
 import { commandLogin } from "./program_commands/command_login.js";
+import { commandReset } from "./program_commands/reset_command.js";
 
 
 export type CLICommand = {
@@ -64,6 +65,11 @@ export function getCommands(): Record<string, CLICommand> {
             name: "login",
             description: "Logs in the current user.",
             callback: commandLogin,
-        }
+        },
+        reset: {
+            name: "reset",
+            description: "Removes all existing users.",
+            callback: commandReset
+        },
     }
 }
