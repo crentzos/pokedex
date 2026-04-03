@@ -1,27 +1,38 @@
 import { Pokemon } from "./pokeAPI";
+import { capitalize } from "./utilities";
 
 export interface UserProfile {
     passId: string;
     name: string;
     dob: string;
     gender: string;
+
+}
+
+export interface Inventory {
+    pokeballs: number,
+    greatballs: number,
+    ultraballs: number,
+    masterballs: number,
 }
 
 export interface UserData {
     profile: UserProfile;
     pokedex: Record<string, Pokemon>;
     lastLocationURL: string | null;
+    team: string[];
 }
 
 
 export class User {
     private _userData: UserData;
 
-    constructor(profile: UserProfile, initialPokedex: Record<string, Pokemon> = {}, initialLocation: string | null = null) {
+    constructor(profile: UserProfile, initialPokedex: Record<string, Pokemon> = {}, initialLocation: string | null = null, initialTeam: string[] = []) {
         this._userData = {
             profile,
             pokedex: initialPokedex,
             lastLocationURL: initialLocation,
+            team: initialTeam,
         };
     };
 
@@ -42,6 +53,14 @@ export class User {
         return this._userData;
     }
 
+    get team(): string[] {
+        return this._userData.team;
+    }
+
+    set lastLocationURL(url: string | null) {
+        this._userData.lastLocationURL = url;
+    }
+
     addPokemon(name: string, pokemon: Pokemon): boolean {
         const key = name.toLowerCase();
 
@@ -50,6 +69,27 @@ export class User {
             return false;
         }
         this._userData.pokedex[name.toLowerCase()] = pokemon;
+        return true;
+    }
+
+    addMember(name: string) {
+        const key = name.toLocaleLowerCase();
+
+        if (!this._userData.pokedex[key]) return "NOT_CAUGHT";
+        if (this._userData.team.includes(key)) return "ALREADY_IN_TEAM";
+        if (this._userData.team.length >= 5) return "TEAM_FULL";
+
+        this._userData.team.push(key);
+        return "SUCCESS";
+    }
+
+    removeMember(name: string): boolean {
+        const key = name.toLowerCase();
+        const index = this._userData.team.indexOf(key);
+
+        if (index === -1) return false;
+
+        this._userData.team.splice(index, 1);
         return true;
     }
 

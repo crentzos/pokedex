@@ -1,3 +1,4 @@
+import { capitalize } from "src/utilities";
 import { State } from "../state";
 
 export async function commandInspect(state: State, ...args: string[]): Promise<void> {
@@ -21,7 +22,7 @@ export async function commandInspect(state: State, ...args: string[]): Promise<v
     }
 
 
-    console.log(`Name: ${pokemon.name}`);
+    console.log(`Name: ${capitalize(pokemon.name)}`);
     console.log(`Height: ${pokemon.height}`);
     console.log(`Weight: ${pokemon.weight}`);
     console.log("Stats:");
@@ -30,7 +31,7 @@ export async function commandInspect(state: State, ...args: string[]): Promise<v
     }
     console.log("Types:");
     for (const type of pokemon.types) {
-        console.log(`  - ${type}`);
+        console.log(`  - ${capitalize(type)}`);
     }
 
 }

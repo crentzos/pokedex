@@ -10,6 +10,9 @@ import { commandMap } from "./program_commands/command_map.js";
 import { commandMapb } from "./program_commands/command_mapback.js";
 import { commandLogin } from "./program_commands/command_login.js";
 import { commandReset } from "./program_commands/reset_command.js";
+import { commandAddTeamMember } from "./program_commands/command_addTeamMember.js";
+import { commandRemoveTeamMember } from "./program_commands/command_removeTeamMemer.js";
+import { commandTeam } from "./program_commands/command_team.js";
 
 
 export type CLICommand = {
@@ -33,12 +36,12 @@ export function getCommands(): Record<string, CLICommand> {
         },
         map: {
             name: "map",
-            description: "Prints the map locations by 20. Each time you call the command prints the next 20 locations till end of file.",
+            description: "Prints the map locations by 20. Each time you call the command prints the next 20 locations till end of file. If a user is logged in the first time he/she types map, it will show the last 20 locations he/she viewed.",
             callback: commandMap
         },
         mapb: {
             name: "mapb",
-            description: "Prints the previous map locations by 20. Each time you call the command prints the previous 20 locations till end of file.",
+            description: "Prints the previous map locations by 20. Each time you call the command prints the previous 20 locations till end of file.If a user is logged in the first time he/she types mapb, it will show the last 20 locations he/she viewed.",
             callback: commandMapb
         },
         explore: {
@@ -71,5 +74,20 @@ export function getCommands(): Record<string, CLICommand> {
             description: "Removes all existing users.",
             callback: commandReset
         },
+        add: {
+            name: "add <pokemon-name>",
+            description: "Adds the selected pokemon to your team.",
+            callback: commandAddTeamMember
+        },
+        remove: {
+            name: "remove <pokemon-name>",
+            description: "Removes the selected pokemon to your team.",
+            callback: commandRemoveTeamMember
+        },
+        team: {
+            name: "team",
+            description: "Lists the pokemon in your team.",
+            callback: commandTeam
+        }
     }
 }
