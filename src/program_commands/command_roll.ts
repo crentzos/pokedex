@@ -16,7 +16,7 @@ export async function commandRoll(state: State): Promise<void> {
     }
 
     if (!state.currentUser.canRoll()) {
-        console.log("You've used all your rolls for today! You can roll again after 00:00:00!");
+        console.log("You've used all your rolls for today! You can try again after 00:00:00!");
         return;
     }
 

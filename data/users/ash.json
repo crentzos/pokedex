@@ -43,9 +43,12 @@
     }
   },
   "lastLocationURL": "https://pokeapi.co/api/v2/location-area",
-  "team": [],
+  "team": [
+    "pikachu",
+    "charizard"
+  ],
   "inventory": {
-    "pokeballs": 2,
+    "pokeballs": 8,
     "greatballs": 0,
     "ultraballs": 0,
     "masterballs": 0

@@ -1,3 +1,0 @@
-1. Add limit to inventory items.
-2. Check the validity of date
-3.Complete battling system.

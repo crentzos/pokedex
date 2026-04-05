@@ -22,10 +22,22 @@ export async function handleCommand(
     if (words.length === 0) return reprompt(null);
 
     const command = state.commands[words[0]];
+
     if (!command) {
         console.log(`Command ${words[0]} does not exist...`);
         return reprompt(null);
     }
+
+    if (state.activeBattle) {
+        const allowedInBattle = ["attack", "run", "swap", "exit", "team"];
+        if (!allowedInBattle.includes(words[0])) {
+            console.log("--------------------------------------------------");
+            console.log(`You cannot ${words[0]} while in battle!`);
+            console.log("Available commands: attack <type-of-attack>, run, swap <pokemon-name>, exti, team.");
+            return reprompt(null);
+        }
+    }
+
 
     try {
         await command.callback(state, ...words.slice(1));

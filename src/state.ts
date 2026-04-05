@@ -8,6 +8,15 @@ export type InterviewState = {
     step: number;
 };
 
+export interface BattleState {
+    enemy: Pokemon;
+    enemyHP: number;
+    playerTeamHP: Record<string, number>;
+    activePokemonName: string;
+    fainted: boolean;
+    isPlayerFaster: boolean;
+}
+
 
 export type State = {
     commands: Record<string, CLICommand>;
@@ -18,6 +27,7 @@ export type State = {
     replServer: REPLServer | null;
     currentUser: User | null;
     interview: InterviewState | null;
+    activeBattle: BattleState | null;
 };
 
 export function initState() {

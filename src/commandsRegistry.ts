@@ -15,6 +15,10 @@ import { commandRemoveTeamMember } from "./program_commands/command_removeTeamMe
 import { commandTeam } from "./program_commands/command_team.js";
 import { commandRoll } from "./program_commands/command_roll.js";
 import { commandInventory } from "./program_commands/command_inventory.js";
+import { commandBattle } from "./program_commands/battle/command_battle.js";
+import { commandAttack } from "./program_commands/battle/command_attack.js";
+import { commandRun } from "./program_commands/battle/command_run.js";
+import { commandSwap } from "./program_commands/battle/command_swap.js";
 
 
 export type CLICommand = {
@@ -101,5 +105,26 @@ export function getCommands(): Record<string, CLICommand> {
             description: "Lists all the items in user's inventory.",
             callback: commandInventory
         },
+        battle: {
+            name: "battle <pokemon-name>",
+            description: "Starts battle with a Pokemon of your selection.",
+            callback: commandBattle
+        },
+        attack: {
+            name: "attack",
+            description: "If in battle, your pokemon attacks.",
+            callback: commandAttack
+        },
+        run: {
+            name: "run",
+            description: "If in battle, you try to escape.",
+            callback: commandRun
+        },
+        swap: {
+            name: "swap",
+            description: "If in battle, you swap your pokemon (1 round penalty).",
+            callback: commandSwap
+        },
+
     }
 }
