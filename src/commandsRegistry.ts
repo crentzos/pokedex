@@ -13,6 +13,8 @@ import { commandReset } from "./program_commands/reset_command.js";
 import { commandAddTeamMember } from "./program_commands/command_addTeamMember.js";
 import { commandRemoveTeamMember } from "./program_commands/command_removeTeamMemer.js";
 import { commandTeam } from "./program_commands/command_team.js";
+import { commandRoll } from "./program_commands/command_roll.js";
+import { commandInventory } from "./program_commands/command_inventory.js";
 
 
 export type CLICommand = {
@@ -50,8 +52,8 @@ export function getCommands(): Record<string, CLICommand> {
             callback: commandExplore
         },
         catch: {
-            name: "catch <pokemon-name>",
-            description: "Throws pokeball at specified pokemon in order to catch it.",
+            name: "catch <pokemon-name> <pokeball-type>",
+            description: "Attempts to capture the specified Pokemon using a ball from your inventory. If no ball is specified, a standard Poke Ball is used. You can use shorthand names like 'master' or 'ultra'.",
             callback: commandCatch
         },
         inspect: {
@@ -88,6 +90,16 @@ export function getCommands(): Record<string, CLICommand> {
             name: "team",
             description: "Lists the pokemon in your team.",
             callback: commandTeam
-        }
+        },
+        roll: {
+            name: "roll",
+            description: "Uses the gatcha function to allow the user to get a random Pokeball. Limit to 3 rolls per day.",
+            callback: commandRoll
+        },
+        inventory: {
+            name: "inventory",
+            description: "Lists all the items in user's inventory.",
+            callback: commandInventory
+        },
     }
 }

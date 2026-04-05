@@ -9,3 +9,7 @@ export function capitalize(input: string): string {
 export function sanitize(input: string): string {
     return input.trim();
 };
+
+export function getTodayDateString(): string {
+    return new Intl.DateTimeFormat('en-GB').format(new Date()).replace(/\//g, '-');
+}

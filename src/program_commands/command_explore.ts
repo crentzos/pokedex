@@ -1,3 +1,4 @@
+import { capitalize } from "src/utilities";
 import { State } from "../state"
 
 export async function commandExplore(state: State, ...args: string[]) {
@@ -9,9 +10,9 @@ export async function commandExplore(state: State, ...args: string[]) {
 
     const areaData = await state.pokeAPI.fetchEncounters(areaName);
 
-    console.log(`Exploring ${areaName}...`);
+    console.log(`Exploring ${capitalize(areaName)}...`);
     console.log("Found Pokemon:");
     for (const encounter of areaData.pokemon_encounters) {
-        console.log(` - ${encounter.pokemon.name}`);
+        console.log(` - ${capitalize(encounter.pokemon.name)}`);
     }
 }

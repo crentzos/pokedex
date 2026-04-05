@@ -17,7 +17,7 @@ export async function commandInspect(state: State, ...args: string[]): Promise<v
     const pokemon = state.currentUser.pokedex[pokemonName];
 
     if (pokemon === undefined) {
-        console.log(`You have not caught ${pokemonName}.`);
+        console.log(`You have not encountered ${pokemonName}.`);
         return;
     }
 
